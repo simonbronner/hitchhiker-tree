@@ -3,15 +3,6 @@
   :url "https://github.com/dgrnbrg/hitchhiker-tree"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.clojure/clojurescript "1.8.51" :scope "provided"]
-                 [org.clojure/core.memoize "0.5.8"]
-                 [com.taoensso/carmine "2.12.2"]
-                 [org.clojure/core.rrb-vector "0.0.11"]
-                 [org.clojure/core.cache "0.6.5"]
-
-                 [io.replikativ/konserve "0.5.0-beta3"]
-                 ]
   :aliases {"bench" ["with-profile" "profiling" "run" "-m" "hitchhiker.bench"]}
   :jvm-opts ["-server" "-Xmx3700m" "-Xms3700m"]
   :profiles {:test
@@ -37,7 +28,6 @@
                                   #_:nrepl-middleware #_[cemerick.piggieback/wrap-cljs-repl]}}}
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
-
   :cljsbuild {:builds
               [{:id "dev"
                 :figwheel true
@@ -60,5 +50,8 @@
                            }}
                ]}
 
-  :plugins [[lein-figwheel "0.5.8"]
-            [lein-cljsbuild "1.1.4" :exclusions [[org.clojure/clojure]]]])
+  :plugins [[lein-tools-deps "0.4.3"]
+            [lein-figwheel "0.5.8"]
+            [lein-cljsbuild "1.1.4" :exclusions [[org.clojure/clojure]]]]
+  :middleware [lein-tools-deps.plugin/resolve-dependencies-with-deps-edn]
+  :lein-tools-deps/config {:config-files [:install :user :project]})
